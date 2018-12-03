@@ -3,9 +3,10 @@
 const program = require('commander');
 const { run } = require('./core');
 const logger = require('./logger');
+const {version} = require('./package.json');
 
 program
-  .version('1.0.0')
+  .version(version)
   .description('Contact management system');
 
 program
