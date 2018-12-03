@@ -1,0 +1,47 @@
+{
+  "name": "markassin",
+  "version": "0.1.0",
+  "description": "Generate a static website from your mardown documentation",
+  "main": "index.js",
+  "preferGlobal": true,
+  "bin": {
+    "markassin": "./index.js"
+  },
+  "scripts": {
+    "test": "nyc -r lcov -r text-summary mocha --opts mocha.opts ./*spec.js",
+    "lint": "eslint ./*.js"
+  },
+  "keywords": [
+    "mardown",
+    "md",
+    "html"
+  ],
+  "author": "Matthieu Drouian <matthieudrouian@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^2.19.0",
+    "marked": "^0.5.2",
+    "puppeteer": "^1.11.0",
+    "winston": "^3.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
+    "rimraf": "^2.6.2",
+    "should": "^13.2.3"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drouian-m/markassin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/drouian-m/markassin/issues"
+  },
+  "homepage": "https://github.com/drouian-m/markassin#readme"
+}
