@@ -24,3 +24,10 @@ markassin <command>
 * `generate|g <source> <target>`  Generate website from markdown source
 
 **/!\ Remove target dir if exist**
+
+## Miscellaneous
+
+Generator use Github markdown stylesheet to render html.
+
+## Todo
+ - Remove or rename target if already exist
