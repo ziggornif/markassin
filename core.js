@@ -3,7 +3,7 @@ const fs = require('fs');
 const marked = require('marked');
 const path = require('path');
 const template = require('./template');
-const logger = require('./logger');
+const {green, red} = require('colors');
 
 const lstat = util.promisify(fs.lstat);
 const mkdir = util.promisify(fs.mkdir);
@@ -60,12 +60,11 @@ async function generate(source, target) {
       });
       return Promise.all(promises);
     }
-    logger.debug(`generate ${source} file`);
     const fileContent = await readFile(source, 'utf8');
     const htmlContent = transformMdToHtml(fileContent);
     return writeFile(target, htmlContent);
   } catch (error) {
-    logger.warn('Something wrong during generation', error);
+    console.error(red('Something wrong during generation', error));
     if (error.code === 'EEXIST') {
       throw new Error('Target already exist, please remove it before running.');
     }
@@ -89,4 +88,5 @@ exports.run = async function run(source, target) {
     targetDir = path.join(process.cwd(), target);
   }
   await generate(sourceDir, targetDir);
+  console.log(green(`HTML content successfully generated in ${target}`));
 };

@@ -11,7 +11,7 @@ npm install -g markassin
 ## Use
 
 ```bash
-markassin <command>
+markassin <source> <target>
 ```
 
 ### Options
@@ -21,7 +21,7 @@ markassin <command>
 
 ### Commands
 
-* `generate|g <source> <target>`  Generate website from markdown source
+* `markassin <source> <target>`  Generate website from markdown source
 
 **/!\ Remove target dir if exist**
 

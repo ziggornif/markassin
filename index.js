@@ -2,22 +2,20 @@
 
 const program = require('commander');
 const { run } = require('./core');
-const logger = require('./logger');
 const {version} = require('./package.json');
+const {red} = require('colors');
 
 program
   .version(version)
   .description('Contact management system');
 
 program
-  .command('generate <source> <target>')
-  .alias('g')
   .description('Generate website from markdown source')
   .action(async (source, target) => {
     try {
       await run(source, target);
     } catch (error) {
-      logger.error(error.message);
+      console.error(red(error.message));
     }
   });
 
