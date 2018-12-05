@@ -13,6 +13,7 @@ npm install -g markassin
 ```bash
 markassin <source> <target>
 ```
+![example](./example/example.gif)
 
 ### Options
 
