@@ -21,7 +21,8 @@
   "dependencies": {
     "colors": "^1.3.2",
     "commander": "^2.19.0",
-    "marked": "^0.5.2"
+    "marked": "^0.5.2",
+    "mime-types": "^2.1.21"
   },
   "devDependencies": {
     "eslint": "^5.9.0",

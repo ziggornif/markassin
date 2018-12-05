@@ -2,14 +2,16 @@ const util = require('util');
 const fs = require('fs');
 const marked = require('marked');
 const path = require('path');
-const template = require('./template');
+const mime = require('mime-types');
 const {green, red} = require('colors');
+const template = require('./template');
 
 const lstat = util.promisify(fs.lstat);
 const mkdir = util.promisify(fs.mkdir);
 const readdir = util.promisify(fs.readdir);
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
+const copyFile = util.promisify(fs.copyFile);
 
 
 /**
@@ -53,12 +55,15 @@ async function generate(source, target) {
       const promises = [];
       files.forEach((file) => {
         let targetfile = file;
-        if (path.parse(file).ext) {
+        if (path.parse(file).ext === '.md') {
           targetfile = `${path.parse(file).name}.html`;
         }
         return promises.push(generate(`${source}/${file}`, `${target}/${targetfile}`));
       });
       return Promise.all(promises);
+    }
+    if(mime.lookup(source) !== 'text/markdown') {
+      return copyFile(source, target);
     }
     const fileContent = await readFile(source, 'utf8');
     const htmlContent = transformMdToHtml(fileContent);
