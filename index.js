@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 const program = require('commander');
+const { red } = require('colors');
 const { run } = require('./core');
-const {version} = require('./package.json');
-const {red} = require('colors');
+const { version } = require('./package.json');
 
 program
   .version(version)
@@ -18,5 +18,4 @@ program
       console.error(red(error.message));
     }
   });
-
 program.parse(process.argv);

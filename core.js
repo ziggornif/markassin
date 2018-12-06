@@ -3,7 +3,7 @@ const fs = require('fs');
 const marked = require('marked');
 const path = require('path');
 const mime = require('mime-types');
-const {green, red} = require('colors');
+const { green, red } = require('colors');
 const template = require('./template');
 
 const lstat = util.promisify(fs.lstat);
@@ -62,7 +62,7 @@ async function generate(source, target) {
       });
       return Promise.all(promises);
     }
-    if(mime.lookup(source) !== 'text/markdown') {
+    if (mime.lookup(source) !== 'text/markdown') {
       return copyFile(source, target);
     }
     const fileContent = await readFile(source, 'utf8');
@@ -93,5 +93,5 @@ exports.run = async function run(source, target) {
     targetDir = path.join(process.cwd(), target);
   }
   await generate(sourceDir, targetDir);
-  console.log(green(`HTML content successfully generated in ${target}`));
+  console.info(green(`HTML content successfully generated in ${target}`));
 };

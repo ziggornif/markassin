@@ -2,6 +2,9 @@
 
 Generate a static website from your mardown documentation.
 
+[![Build Status](https://travis-ci.org/drouian-m/markassin.svg?branch=master)](https://travis-ci.org/drouian-m/markassin)
+[![Coverage Status](https://coveralls.io/repos/github/drouian-m/markassin/badge.svg?branch=master)](https://coveralls.io/github/drouian-m/markassin?branch=master)
+
 ## Installation
 
 ```bash

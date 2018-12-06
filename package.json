@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "nyc -r lcov -r text-summary mocha --opts mocha.opts ./*spec.js",
-    "lint": "eslint ./*.js"
+    "lint": "eslint ./*.js",
+    "coveralls": "cat ./coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js"
   },
   "keywords": [
     "mardown",
@@ -25,6 +26,7 @@
     "mime-types": "^2.1.21"
   },
   "devDependencies": {
+    "coveralls": "^3.0.2",
     "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
