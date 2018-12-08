@@ -1,4 +1,4 @@
-## [Unreleased]
+## 0.4.0 (December 8, 2018)
 
 * Add coveralls integration https://coveralls.io/github/drouian-m/markassin
 * Add snyk securty audit
