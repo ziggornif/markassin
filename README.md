@@ -2,8 +2,10 @@
 
 Generate a static website from your mardown documentation.
 
+[![NPM Version](https://img.shields.io/npm/v/markassin.svg)](https://www.npmjs.com/package/markassin)
 [![Build Status](https://travis-ci.org/drouian-m/markassin.svg?branch=master)](https://travis-ci.org/drouian-m/markassin)
 [![Coverage Status](https://coveralls.io/repos/github/drouian-m/markassin/badge.svg?branch=master)](https://coveralls.io/github/drouian-m/markassin?branch=master)
+[![Known Vulnerabilities](https://snyk.io/test/github/drouian-m/markassin/badge.svg?targetFile=package.json)](https://snyk.io/test/github/drouian-m/markassin?targetFile=package.json)
 
 ## Installation
 
