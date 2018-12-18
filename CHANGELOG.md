@@ -1,3 +1,7 @@
+## 0.4.1 (December 18, 2018)
+
+* Fix ut8 encoding #1
+
 ## 0.4.0 (December 8, 2018)
 
 * Add coveralls integration https://coveralls.io/github/drouian-m/markassin
