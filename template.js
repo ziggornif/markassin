@@ -1,6 +1,7 @@
 module.exports = content => `<!DOCTYPE html>
   <html>
   <head>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.css">
     <style>
       .markdown-body {
