@@ -1,3 +1,7 @@
+## 0.5.0 (January 28, 2019)
+
+* Add syntax highlighting
+
 ## 0.4.1 (December 18, 2018)
 
 * Fix ut8 encoding #1
