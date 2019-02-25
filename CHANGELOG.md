@@ -1,3 +1,7 @@
+## 0.5.1 (February 25, 2019)
+
+* Fix marked vulnerability https://app.snyk.io/vuln/SNYK-JS-MARKED-73637
+
 ## 0.5.0 (January 28, 2019)
 
 * Add syntax highlighting
