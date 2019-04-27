@@ -1,3 +1,9 @@
+## 1.0.0 (April 27, 2019)
+
+* Add custom template option
+* Add force remove target option
+* Fix marked vulnerability
+
 ## 0.5.1 (February 25, 2019)
 
 * Fix marked vulnerability https://app.snyk.io/vuln/SNYK-JS-MARKED-73637

@@ -1,6 +1,6 @@
 {
   "name": "markassin",
-  "version": "0.5.1",
+  "version": "1.0.0",
   "description": "Generate a static website from your mardown documentation",
   "main": "index.js",
   "preferGlobal": true,

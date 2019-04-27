@@ -26,9 +26,13 @@ function transformPath(filePath) {
   return filePath;
 }
 
-function exists(fpath) {
+/**
+ * Check if file or directory exists
+ * @param {*} filePath
+ */
+function fileExists(filePath) {
   return new Promise((resolve) => {
-    fs.access(fpath, fs.F_OK, error => resolve(!error));
+    fs.access(filePath, fs.F_OK, error => resolve(!error));
   });
 }
 
@@ -108,7 +112,7 @@ exports.run = async function run(source, target, customTemplate, forceGeneration
   const sourceDir = transformPath(source);
   const targetDir = transformPath(target);
 
-  if (await exists(targetDir) && !forceGeneration) {
+  if (await fileExists(targetDir) && !forceGeneration) {
     throw new Error('Target already exist, please remove it before running.');
   }
 
