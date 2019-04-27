@@ -10,6 +10,8 @@
   "rules": {
     "no-console":"off",
     "global-require":"off",
-    "import/no-dynamic-require": "off"
+    "import/no-dynamic-require": "off",
+    "no-restricted-syntax": "off",
+    "no-await-in-loop":"off"
   }
 }

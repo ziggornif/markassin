@@ -4,6 +4,7 @@ const marked = require('marked');
 const path = require('path');
 const mime = require('mime-types');
 const { green, red } = require('colors');
+const rimraf = require('rimraf');
 const template = require('./template');
 
 const lstat = util.promisify(fs.lstat);
@@ -12,6 +13,7 @@ const readdir = util.promisify(fs.readdir);
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 const copyFile = util.promisify(fs.copyFile);
+const asyncRimraf = util.promisify(rimraf);
 
 /**
  * Transform relative path to absolute
@@ -22,6 +24,12 @@ function transformPath(filePath) {
     return path.join(process.cwd(), filePath);
   }
   return filePath;
+}
+
+function exists(fpath) {
+  return new Promise((resolve) => {
+    fs.access(fpath, fs.F_OK, error => resolve(!error));
+  });
 }
 
 /**
@@ -38,7 +46,6 @@ function cleanLinks(content) {
  */
 function applyTemplate(content, htmlTemplate) {
   if (htmlTemplate) {
-    console.log(htmlTemplate);
     const customTemplate = require(htmlTemplate);
     return customTemplate(content);
   }
@@ -67,16 +74,14 @@ async function generate(source, target, htmlTemplate) {
     if (stat.isDirectory()) {
       await mkdir(target);
       const files = await readdir(source);
-      const promises = [];
-      files.forEach((file) => {
+      for (const file of files) {
         let targetfile = file;
         if (path.parse(file).ext === '.md') {
           console.log(`${target}/${targetfile}`);
           targetfile = `${path.parse(file).name}.html`;
         }
-        promises.push(generate(`${source}/${file}`, `${target}/${targetfile}`, htmlTemplate));
-      });
-      await Promise.all(promises);
+        await generate(`${source}/${file}`, `${target}/${targetfile}`, htmlTemplate);
+      }
     }
     if (mime.lookup(source) !== 'text/markdown') {
       return copyFile(source, target);
@@ -99,11 +104,18 @@ async function generate(source, target, htmlTemplate) {
  * @param {string} target html target dir
  * @param {string} customTemplate custom html template file
  */
-exports.run = async function run(source, target, customTemplate) {
-  console.log(customTemplate);
-
+exports.run = async function run(source, target, customTemplate, forceGeneration) {
   const sourceDir = transformPath(source);
   const targetDir = transformPath(target);
+
+  if (await exists(targetDir) && !forceGeneration) {
+    throw new Error('Target already exist, please remove it before running.');
+  }
+
+  if (forceGeneration) {
+    await asyncRimraf(target);
+  }
+
   let htmlTemplate;
   if (customTemplate) {
     htmlTemplate = transformPath(customTemplate);

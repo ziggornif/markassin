@@ -11,10 +11,11 @@ program
 
 program
   .option('-t, --template <template file>', 'custom html template')
+  .option('-f, --force', 'force generation')
   .description('Generate website from markdown source')
   .action(async (source, target, args) => {
     try {
-      await run(source, target, args.template);
+      await run(source, target, args.template, args.force);
     } catch (error) {
       console.error(red(error));
     }
