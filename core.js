@@ -13,6 +13,16 @@ const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 const copyFile = util.promisify(fs.copyFile);
 
+/**
+ * Transform relative path to absolute
+ * @param {*} filePath
+ */
+function transformPath(filePath) {
+  if (!path.isAbsolute(filePath)) {
+    return path.join(process.cwd(), filePath);
+  }
+  return filePath;
+}
 
 /**
  * Clean markdown file links to html file
@@ -26,7 +36,12 @@ function cleanLinks(content) {
  * Apply html template
  * @param {*} content file content
  */
-function applyTemplate(content) {
+function applyTemplate(content, htmlTemplate) {
+  if (htmlTemplate) {
+    console.log(htmlTemplate);
+    const customTemplate = require(htmlTemplate);
+    return customTemplate(content);
+  }
   return template(content);
 }
 
@@ -34,9 +49,9 @@ function applyTemplate(content) {
  * Transform markdown content to html
  * @param {string} content file content
  */
-function transformMdToHtml(content) {
+function transformMdToHtml(content, htmlTemplate) {
   let htmlContent = marked(content);
-  htmlContent = applyTemplate(htmlContent);
+  htmlContent = applyTemplate(htmlContent, htmlTemplate);
   htmlContent = cleanLinks(htmlContent);
   return htmlContent;
 }
@@ -46,7 +61,7 @@ function transformMdToHtml(content) {
  * @param {string} source md source dir
  * @param {string} target html target dir
  */
-async function generate(source, target) {
+async function generate(source, target, htmlTemplate) {
   try {
     const stat = await lstat(source);
     if (stat.isDirectory()) {
@@ -56,17 +71,18 @@ async function generate(source, target) {
       files.forEach((file) => {
         let targetfile = file;
         if (path.parse(file).ext === '.md') {
+          console.log(`${target}/${targetfile}`);
           targetfile = `${path.parse(file).name}.html`;
         }
-        return promises.push(generate(`${source}/${file}`, `${target}/${targetfile}`));
+        promises.push(generate(`${source}/${file}`, `${target}/${targetfile}`, htmlTemplate));
       });
-      return Promise.all(promises);
+      await Promise.all(promises);
     }
     if (mime.lookup(source) !== 'text/markdown') {
       return copyFile(source, target);
     }
     const fileContent = await readFile(source, 'utf8');
-    const htmlContent = transformMdToHtml(fileContent);
+    const htmlContent = transformMdToHtml(fileContent, htmlTemplate);
     return writeFile(target, htmlContent);
   } catch (error) {
     console.error(red('Something wrong during generation', error));
@@ -81,17 +97,18 @@ async function generate(source, target) {
  * Run website generation
  * @param {string} source md source dir
  * @param {string} target html target dir
+ * @param {string} customTemplate custom html template file
  */
-exports.run = async function run(source, target) {
-  let sourceDir = source;
-  let targetDir = target;
-  if (!path.isAbsolute(source)) {
-    sourceDir = path.join(process.cwd(), source);
-  }
+exports.run = async function run(source, target, customTemplate) {
+  console.log(customTemplate);
 
-  if (!path.isAbsolute(target)) {
-    targetDir = path.join(process.cwd(), target);
+  const sourceDir = transformPath(source);
+  const targetDir = transformPath(target);
+  let htmlTemplate;
+  if (customTemplate) {
+    htmlTemplate = transformPath(customTemplate);
   }
-  await generate(sourceDir, targetDir);
+  await generate(sourceDir, targetDir, htmlTemplate);
+
   console.info(green(`HTML content successfully generated in ${target}`));
 };

@@ -24,6 +24,7 @@ markassin <source> <target>
 
 * `-h, --help` output usage information
 * `-V, --version` output the version number
+* `-t --template` generate html with a custom template
 
 ### Commands
 
@@ -34,6 +35,25 @@ markassin <source> <target>
 ## Miscellaneous
 
 Generator use Github markdown stylesheet to render html.
+
+## Templating
+
+To generate custom html, markassin accept input template with `--template -t` param.
+
+### Template format
+
+```js
+module.exports = content => `<!DOCTYPE html>
+  <html>
+  <head>
+    head stuff here
+  </head>
+  <body class="markdown-body">
+  ${content} // markdown transformed is injected here
+  </body>
+  </html>`;
+`
+```
 
 ## Todo
  - Remove or rename target if already exist

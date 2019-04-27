@@ -8,6 +8,8 @@
     "ecmaVersion": 9
   },
   "rules": {
-    "no-console":"off"
+    "no-console":"off",
+    "global-require":"off",
+    "import/no-dynamic-require": "off"
   }
 }

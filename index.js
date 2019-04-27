@@ -10,12 +10,13 @@ program
   .description('Contact management system');
 
 program
+  .option('-t, --template <template file>', 'custom html template')
   .description('Generate website from markdown source')
-  .action(async (source, target) => {
+  .action(async (source, target, args) => {
     try {
-      await run(source, target);
+      await run(source, target, args.template);
     } catch (error) {
-      console.error(red(error.message));
+      console.error(red(error));
     }
   });
 program.parse(process.argv);
