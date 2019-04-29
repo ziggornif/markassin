@@ -78,14 +78,15 @@ async function generate(source, target, htmlTemplate) {
     if (stat.isDirectory()) {
       await mkdir(target);
       const files = await readdir(source);
-      for (const file of files) {
+      const promises = [];
+      files.forEach((file) => {
         let targetfile = file;
         if (path.parse(file).ext === '.md') {
-          console.log(`${target}/${targetfile}`);
           targetfile = `${path.parse(file).name}.html`;
         }
-        await generate(`${source}/${file}`, `${target}/${targetfile}`, htmlTemplate);
-      }
+        return promises.push(generate(`${source}/${file}`, `${target}/${targetfile}`, htmlTemplate));
+      });
+      return Promise.all(promises);
     }
     if (mime.lookup(source) !== 'text/markdown') {
       return copyFile(source, target);
@@ -95,9 +96,6 @@ async function generate(source, target, htmlTemplate) {
     return writeFile(target, htmlContent);
   } catch (error) {
     console.error(red('Something wrong during generation', error));
-    if (error.code === 'EEXIST') {
-      throw new Error('Target already exist, please remove it before running.');
-    }
     throw new Error('Fail to generate content from source.');
   }
 }
@@ -108,7 +106,9 @@ async function generate(source, target, htmlTemplate) {
  * @param {string} target html target dir
  * @param {string} customTemplate custom html template file
  */
-exports.run = async function run(source, target, customTemplate, forceGeneration) {
+exports.run = async function run({
+  source, target, userTemplate, forceGeneration,
+}) {
   const sourceDir = transformPath(source);
   const targetDir = transformPath(target);
 
@@ -121,10 +121,12 @@ exports.run = async function run(source, target, customTemplate, forceGeneration
   }
 
   let htmlTemplate;
-  if (customTemplate) {
-    htmlTemplate = transformPath(customTemplate);
+  if (userTemplate) {
+    if (!await fileExists(userTemplate)) throw new Error('Custom template does not exists.');
+
+    htmlTemplate = transformPath(userTemplate);
   }
   await generate(sourceDir, targetDir, htmlTemplate);
 
-  console.info(green(`HTML content successfully generated in ${target}`));
+  console.info(green(`HTML content successfully generated in ${target}.`));
 };

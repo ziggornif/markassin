@@ -15,7 +15,9 @@ program
   .description('Generate website from markdown source')
   .action(async (source, target, args) => {
     try {
-      await run(source, target, args.template, args.force);
+      await run({
+        source, target, userTemplate: args.template, forceGeneration: args.force,
+      });
     } catch (error) {
       console.error(red(error));
     }
