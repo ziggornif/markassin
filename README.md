@@ -31,8 +31,6 @@ markassin <source> <target>
 
 * `markassin <source> <target>`  Generate website from markdown source
 
-**/!\ Remove target dir if exist**
-
 ## Miscellaneous
 
 Generator use Github markdown stylesheet to render html.
