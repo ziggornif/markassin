@@ -1,4 +1,4 @@
-## 1.0.0 (April 27, 2019)
+## 1.0.0 (April 29, 2019)
 
 * Add custom template option
 * Add force remove target option
