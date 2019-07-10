@@ -1,6 +1,6 @@
 {
   "name": "markassin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generate a static website from your mardown documentation",
   "main": "index.js",
   "preferGlobal": true,
@@ -22,7 +22,7 @@
   "dependencies": {
     "colors": "^1.3.3",
     "commander": "^2.20.0",
-    "marked": "^0.6.2",
+    "marked": "^0.7.0",
     "mime-types": "^2.1.24",
     "rimraf": "^2.6.3"
   },

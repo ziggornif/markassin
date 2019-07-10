@@ -1,3 +1,7 @@
+## 1.0.1 (July 10, 2019)
+
+* Fix marked vulnerability https://app.snyk.io/vuln/SNYK-JS-MARKED-451341
+
 ## 1.0.0 (April 29, 2019)
 
 * Add custom template option
